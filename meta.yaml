@@ -1,0 +1,20 @@
+package:
+  name: makefile2dot
+  version: "0.0.1"
+
+source:
+  path: .
+
+build:
+  script: python setup.py install -f
+
+requirements:
+  host:
+    - python
+    - pip
+    - graphviz
+    - python-graphviz
+  run:
+    - python
+    - graphviz
+    - python-graphviz
