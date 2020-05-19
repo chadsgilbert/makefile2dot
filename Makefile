@@ -7,6 +7,7 @@
 
 .PHONY: default
 default:
+	@echo 'Type "make install" to configure the environment (only needed once).'
 	@echo 'Type "make all" to generate example output.png.'
 	@echo 'Type "make dist" to generate the distributables.'
 	@echo 'Type "make upload" to upload the distributables to pypi.'
@@ -25,6 +26,10 @@ TEMP = $(WHEEL) \
 	.uploaded \
 	example.dot \
 	example.png
+
+.PHONY: install
+install:
+	conda env create -f environment.yml
 
 .PHONY: all
 all: output.png
