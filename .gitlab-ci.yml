@@ -1,0 +1,16 @@
+---
+test:
+  image: continuumio/miniconda3:4.8.2
+  script:
+    - make install  # Installs dependencies and activates the conda env.
+    - make check    # Runs all the tests.
+  only:
+    - merge_requests
+
+deliver:
+  image: continuumio/miniconda3:4.8.2
+  script:
+    - make install  # Installs dependencies and activates the conda env.
+    - make upload   # runs the rest of the pipeline.
+  only:
+    - master
