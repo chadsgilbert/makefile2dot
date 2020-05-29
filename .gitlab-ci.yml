@@ -2,9 +2,8 @@
 test:
   image: continuumio/miniconda3:4.8.2
   script:
-    - conda init bash
     - conda env create -f environment.yml
-    - conda activate makefile2dot
+    - activate makefile2dot
     - pycodestyle makefile2dot/
     - pytest
   only:
@@ -13,9 +12,8 @@ test:
 deliver:
   image: continuumio/miniconda3:4.8.2
   script:
-    - conda init bash
     - conda env create -f environment.yml
-    - conda activate makefile2dot
+    - activate makefile2dot
     - conda config --set anaconda_upload yes
     - conda build .
     - anaconda login -u $(CONDA_USER) -p $(CONDA_PASS)
