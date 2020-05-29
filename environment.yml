@@ -73,6 +73,7 @@ dependencies:
   - psutil=5.7.0=py37h7b6447c_0
   - py=1.8.1=py_0
   - py-lief=0.10.1=py37h403a769_0
+  - pycodestyle=2.6.0=py_0
   - pycosat=0.6.3=py37h7b6447c_0
   - pycparser=2.20=py_0
   - pyopenssl=19.1.0=py37_0
