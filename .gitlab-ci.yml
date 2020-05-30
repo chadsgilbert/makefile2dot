@@ -17,4 +17,6 @@ deliver:
     - anaconda login -u $(CONDA_USER) -p $(CONDA_PASS)
     - conda build .
   only:
-    - master
+    - tags
+  except:
+    - branches
