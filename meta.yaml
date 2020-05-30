@@ -1,6 +1,6 @@
 package:
   name: makefile2dot
-  version: "0.0.1"
+  version: {{CI_COMMIT_TAG}}
 
 source:
   path: .
