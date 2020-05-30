@@ -3,7 +3,7 @@ test:
   image: continuumio/miniconda3:4.8.2
   script:
     - conda env create -f environment.yml
-    - conda activate makefile2dot
+    - source activate makefile2dot
     - pycodestyle makefile2dot/
     - pytest
   only:
@@ -13,7 +13,7 @@ deliver:
   image: continuumio/miniconda3:4.8.2
   script:
     - conda env create -f environment.yml
-    - conda activate makefile2dot
+    - source activate makefile2dot
     - conda config --set anaconda_upload yes
     - anaconda login -u $(CONDA_USER) -p $(CONDA_PASS)
     - conda build .
