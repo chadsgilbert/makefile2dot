@@ -11,6 +11,7 @@ test:
 deliver:
   image: continuumio/miniconda3:4.8.2
   script:
+    - export
     - conda env create -f environment.yml
     - source activate makefile2dot
     - conda config --set anaconda_upload yes
