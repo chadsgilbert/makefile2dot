@@ -4,8 +4,7 @@ test:
   script:
     - conda env create -f environment.yml
     - source activate makefile2dot
-    - pycodestyle makefile2dot/
-    - pytest
+    - make check
   only:
     - merge_requests
 

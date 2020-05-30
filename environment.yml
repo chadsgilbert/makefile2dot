@@ -57,6 +57,7 @@ dependencies:
   - libxml2=2.9.9=hea5a465_1
   - lz4-c=1.8.1.2=h14c3975_0
   - lzo=2.10=h7b6447c_2
+  - make=4.2.1=h1bed415_1
   - markupsafe=1.1.1=py37h7b6447c_0
   - more-itertools=8.2.0=py_0
   - nbformat=5.0.6=py_0
