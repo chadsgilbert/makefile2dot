@@ -16,20 +16,20 @@ default:
 VERSION := 1.0.2
 LIB_FILES := makefile2dot/__init__.py
 TEST_FILES := makefile2dot/test_makefile2dot.py
-WHEEL = dist/makefile2dot-$(VERSION)-py3-none-any.whl
 TARGZ = dist/makefile2dot-$(VERSION).tar.gz
-TEMP = $(WHEEL) \
+TEMP = \
 	$(TARGZ) \
 	.linted \
 	.checked \
-	.twine_checked \
+	.built \
 	.uploaded \
 	example.dot \
 	example.png
 
 .PHONY: install
 install:
-	conda env create -f environment.yml
+	conda env create -f environment.yml && \
+	conda activate makefile2dot
 
 .PHONY: all
 all: output.png
@@ -53,22 +53,16 @@ check: .checked
 	pytest && touch .checked
 
 .PHONY: dist
-dist: .twine_checked
-
-$(WHEEL): .checked setup.py
-	python -m setup bdist_wheel
-
-$(TARGZ): .checked setup.py
-	python -m setup sdist
-
-.twine_checked: $(WHEEL) $(TARGZ)
-	twine check dist/* && touch .twine_checked
+build: .built
+.built: .checked
+	conda build .
 
 .PHONY: upload
 upload: .uploaded
 
-.uploaded: .twine_checked
-	twine upload -u $(PYPI_USER) -p $(PYPI_PASS) $(WHEEL) $(TARGZ) && touch .uploaded
+.uploaded: .built
+	anaconda login --username $(CONDA_USER) --password $(CONDA_PASS) && \
+	anaconda upload $(WHEEL) $(TARGZ) && touch .uploaded
 
 .PHONY: clean
 clean:
