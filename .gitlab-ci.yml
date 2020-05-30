@@ -14,7 +14,7 @@ deliver:
     - conda env create -f environment.yml
     - source activate makefile2dot
     - conda config --set anaconda_upload yes
-    - anaconda login --user $CONDA_USER --password $CONDA_PASS
+    - anaconda login --username $CONDA_USER --password $CONDA_PASS
     - conda build .
   only:
     - tags
