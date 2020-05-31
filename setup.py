@@ -3,7 +3,6 @@ Create the pypi package.
 '''
 
 import os
-import subprocess
 from setuptools import setup
 
 with open("README.md", "r") as fh:
@@ -11,8 +10,8 @@ with open("README.md", "r") as fh:
 
 VERSION = os.environ.get('CI_COMMIT_TAG', '')
 
-AUTHOR = subprocess.check_output(['git', 'config', 'user.name'])
-EMAIL = subprocess.check_output(['git', 'config', 'user.email'])
+AUTHOR = 'Chad Gilbert'
+EMAIL = 'chad.s.gilbert@gmail.com'
 
 setup(
     name='makefile2dot',
