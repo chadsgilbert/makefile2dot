@@ -15,7 +15,7 @@ deliver:
     - source activate makefile2dot
     - conda config --set anaconda_upload no
     - conda build . --croot /tmp
-    - export FILEPATH=/tmp/linux-64/makefile2dot-$CI_COMMIT_TAG-0.tar.bz2
+    - export FILEPATH=/tmp/linux-64/makefile2dot-$CI_COMMIT_TAG-py37_0.tar.bz2
     - anaconda -t $ANACONDA_AUTH upload -u chadsgilbert $FILEPATH --force
   only:
     - tags
