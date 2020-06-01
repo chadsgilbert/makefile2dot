@@ -13,9 +13,11 @@ deliver:
   script:
     - conda env create -f environment.yml
     - source activate makefile2dot
-    - conda config --set anaconda_upload yes
-    - anaconda login --username $CONDA_USER --password $CONDA_PASS
-    - conda build .
+    - conda config --set anaconda_upload no
+    - mkdir ~/build
+    - conda build . --croot build
+    - export FILEPATH=build/linux-64/makefile2dot-$CI_COMMIT_TAG-0.tar.bz2
+    - anaconda -t $ANACONDA_AUTH upload -u chadsgilbert $FILEPATH --force
   only:
     - tags
   except:
