@@ -9,23 +9,23 @@ test: &test_template
     - merge_requests
 
 test-py35:
-  variables:
-    - PYTHON_VERSION=py35
   <<: *test_template
+  variables:
+    PYTHON_VERSION: py35
 
 test-py36:
   variables:
-    - PYTHON_VERSION=py36
+    PYTHON_VERSION: py36
   <<: *test_template
 
 test-py37:
   variables:
-    - PYTHON_VERSION=py37
+    PYTHON_VERSION: py37
   <<: *test_template
 
 test-py38:
   variables:
-    - PYTHON_VERSION=py38
+    PYTHON_VERSION: py38
   <<: *test_template
 
 deliver:
