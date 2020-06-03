@@ -1,9 +1,10 @@
 ---
-test: &test_template
+.test: &test_template
   image: continuumio/miniconda3:4.8.2
   script:
     - conda env create -f environment-$PYTHON_VERSION.yml
     - source activate makefile2dot-$PYTHON_VERSION
+    - conda install pytest pycodestyle
     - make check
   only:
     - merge_requests
