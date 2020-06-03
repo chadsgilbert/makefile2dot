@@ -29,16 +29,36 @@ test-py38:
     PYTHON_VERSION: py38
   <<: *test_template
 
-deliver:
+.deliver: &deliver_template
   image: continuumio/miniconda3:4.8.2
   script:
-    - conda env create -f environment-py37.yml
-    - source activate makefile2dot
+    - conda env create -f environment-$PYTHON_VERSION.yml
+    - source activate makefile2dot-$PYTHON_VERSION
     - conda config --set anaconda_upload no
     - conda build . --croot /tmp
-    - export FILEPATH=/tmp/linux-64/makefile2dot-$CI_COMMIT_TAG-py37_0.tar.bz2
+    - export FILEPATH=/tmp/linux-64/makefile2dot-$CI_COMMIT_TAG-$PYTHON_VERSION.tar.bz2
     - anaconda -t $ANACONDA_AUTH upload -u chadsgilbert $FILEPATH --force
   only:
     - tags
   except:
     - branches
+
+deliver-py35:
+  variables:
+    PYTHON_VERSION: py35
+  <<: *deliver_template
+
+deliver-py36:
+  variables:
+    PYTHON_VERSION: py36
+  <<: *deliver_template
+
+deliver-py37:
+  variables:
+    PYTHON_VERSION: py37
+  <<: *deliver_template
+
+deliver-py38:
+  variables:
+    PYTHON_VERSION: py38
+  <<: *deliver_template
