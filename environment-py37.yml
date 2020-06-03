@@ -1,4 +1,4 @@
-name: makefile2dot
+name: makefile2dot-py37
 channels:
   - defaults
 dependencies:

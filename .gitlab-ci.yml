@@ -1,17 +1,37 @@
 ---
-test:
+test: &test_template
   image: continuumio/miniconda3:4.8.2
   script:
-    - conda env create -f environment.yml
-    - source activate makefile2dot
+    - conda env create -f environment-$PYTHON_VERSION.yml
+    - source activate makefile2dot-$PYTHON_VERSION
     - make check
   only:
     - merge_requests
 
+test-py35:
+  variables:
+    - PYTHON_VERSION=py35
+  <<: *test_template
+
+test-py36:
+  variables:
+    - PYTHON_VERSION=py36
+  <<: *test_template
+
+test-py37:
+  variables:
+    - PYTHON_VERSION=py37
+  <<: *test_template
+
+test-py38:
+  variables:
+    - PYTHON_VERSION=py38
+  <<: *test_template
+
 deliver:
   image: continuumio/miniconda3:4.8.2
   script:
-    - conda env create -f environment.yml
+    - conda env create -f environment-py37.yml
     - source activate makefile2dot
     - conda config --set anaconda_upload no
     - conda build . --croot /tmp
