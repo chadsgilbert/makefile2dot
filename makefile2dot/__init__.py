@@ -34,10 +34,8 @@ def build_graph(stream, **kwargs):
     """
     flowchart = kwargs.get('flowchart', False)
     direction = kwargs.get('direction', 'TB')
-    print(f'{flowchart=}')
-    print(f'{direction=}')
     graph = gv.Digraph(comment="Makefile")
-    graph.attr(rankdir=kwargs.get('direction', 'TB'))
+    graph.attr(rankdir=direction)
     for line in stream:
         target, dependencies = line.split(':')
 
