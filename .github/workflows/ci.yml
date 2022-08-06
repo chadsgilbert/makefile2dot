@@ -24,11 +24,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install makefile2dot
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         sudo apt install graphviz
+    - name: Test
+      run: |
+        pytest
     - name: Test run in command-line
       run: |
+        python -m pip install makefile2dot
         makefile2dot
 
   build_macOS:
@@ -46,11 +49,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install makefile2dot
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         brew install graphviz
+    - name: Test
+      run: |
+        pytest
     - name: Test run in command-line
       run: |
+        python -m pip install makefile2dot
         makefile2dot
         
   build_winOS:
@@ -68,8 +74,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install makefile2dot
         pip install -r requirements.txt
+    - name: Test
+      run: |
+        pytest
     - name: Test run in command-line
       run: |
-        makefile2dot             
+        python -m pip install makefile2dot
+        makefile2dot   
