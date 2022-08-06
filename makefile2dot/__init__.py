@@ -32,7 +32,10 @@ def build_graph(stream, **kwargs):
     """
     Build a dependency graph from the Makefile database.
     """
-
+    flowchart = kwargs.get('flowchart', False)
+    direction = kwargs.get('direction', 'TB')
+    print(f'{flowchart=}')
+    print(f'{direction=}')
     graph = gv.Digraph(comment="Makefile")
     graph.attr(rankdir=kwargs.get('direction', 'TB'))
     for line in stream:
@@ -51,7 +54,10 @@ def build_graph(stream, **kwargs):
                 graph.node(dependency, shape="rectangle")
             else:
                 graph.node(dependency, shape="rectangle")
-                graph.edge(target, dependency)
+                if flowchart:
+                    graph.edge(dependency, target)
+                else:
+                    graph.edge(target, dependency)
 
     return graph
 
@@ -68,7 +74,7 @@ def makefile2dot(**kwargs):
     output = kwargs.get('output', '')
     view = kwargs.get('view', False)
 
-    graph = build_graph(stream_database(), direction=direction)
+    graph = build_graph(stream_database(), **kwargs)
     if output == "":
         if view:
             graph.view()

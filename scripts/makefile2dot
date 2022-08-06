@@ -18,6 +18,9 @@ PARSER.add_argument('--output', '-o', dest='output', default="",
 PARSER.add_argument('--view', '-v', action='store_true',
                     help="view the graph (disables output to stdout)")
 
+PARSER.add_argument('--flowchart', '-f', action='store_true',
+                    help="Flowchart: arrows point Forward from dependencies to targets.")
+
 ARGS = PARSER.parse_args()
 
-makefile2dot(direction=ARGS.direction, output=ARGS.output, view=ARGS.view)
+makefile2dot(direction=ARGS.direction, output=ARGS.output, view=ARGS.view, flowchart=ARGS.flowchart)
