@@ -15,10 +15,10 @@ PARSER.add_argument('--direction', '-d', dest='direction', default="BT",
 PARSER.add_argument('--output', '-o', dest='output', default="",
                     help="output file name (default: stdout).")
 
-PARSER.add_argument('--view', '-v', action='store_true',
+PARSER.add_argument('--view', '-v', action='store_true', default=False,
                     help="view the graph (disables output to stdout)")
 
-PARSER.add_argument('--flowchart', '-f', action='store_true',
+PARSER.add_argument('--flowchart', '-f', action='store_true', default=False,
                     help="Flowchart: arrows point Forward from dependencies to targets.")
 
 ARGS = PARSER.parse_args()

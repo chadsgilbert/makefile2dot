@@ -12,7 +12,7 @@ def test_makefile():
     '''
     with io.StringIO() as output:
         with redirect_stdout(output):
-            makefile2dot(direction="TB")
+            makefile2dot(direction="TB", output="", view=False, flowchart=False)
         result = output.getvalue()
 
     assert "digraph {" in result
