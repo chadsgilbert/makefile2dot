@@ -2,6 +2,7 @@
 Define the needed functions.
 """
 
+import re
 import subprocess as sp
 import graphviz as gv
 
@@ -16,14 +17,20 @@ def stream_database():
     """
     command = ["make", "-prnB"]
     with sp.Popen(command, stdout=sp.PIPE, universal_newlines=True) as proc:
+        skipnext = False
         for line in proc.stdout:
-            if line[0] == '#':
+            if skipnext:
                 continue
             if line.isspace():
                 continue
-            if ': ' not in line:
+            if '# Not a target' in line:           # ¯\_(ツ)_/¯
+                skipnext = True
                 continue
-            if line[0] == '&':
+            if re.match(r'[^:]*#', line):          # comments
+                continue
+            if not re.match(r'^[^\s]+:\s', line):  # not make targets
+                continue
+            if 'Nothing to be done' in line:       # output from 'make'
                 continue
             yield line.strip()
 
