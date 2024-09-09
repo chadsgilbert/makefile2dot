@@ -1,3 +1,4 @@
 *.tar.gz
 make-*/**
 makefiles/**
+graphs/**
