@@ -2,8 +2,9 @@
 use warnings;
 
 $f = $ARGV[0] //= 'make.texi';
+$d = $ARGV[1] //= 'makefiles';
 open $fh, '<', $f or die $!;
-mkdir 'makefiles' or die $1 unless -d 'makefiles';
+mkdir $d or die $1 unless -d $d;
 
 LINE:
 while (<$fh>) {
@@ -12,13 +13,15 @@ while (<$fh>) {
             next LINE if /\@end .*example/;  # no `@group`s found
             if (/\@group/) {
                 open $makefh, '>', sprintf("makefiles/%05d.mk", $.);
-                print $makefh "\n## example $.\n";
+                print $makefh "## $f line $.\n";
                 GROUP:
                 while (<$fh>) {
-                    # next if /^#/;
-                    next GROUP if /\@(end )?group/;
                     next LINE if /\@end .*example/;
-                    s/@@/@/g;  # texinfo directives
+                    next GROUP if /\@(end )?group/;
+                    next GROUP if /.*\@(var|dots)/;  # texinfo directives
+                    # next if /^#/;
+                    s/@@/@/g;                        # escaped @'s
+                    s/^ {8}/\t/;                     # hopefully make valid
                     print $makefh $_;
                 }
             }

@@ -6,16 +6,23 @@ FORMAT = svg
 
 test: prep
 	@set -euo pipefail; \
-	pushd graphs >/dev/null; \
+	pushd graphs; \
 	for makefile in ../makefiles/*.mk; do \
-		echo -e "\n## $$makefile"; \
+		echo "## working on $$makefile…" >&2; \
 		ln -sf $$makefile Makefile; \
-		$(MAKEFILE2DOT); \
-		:| dot -T$(FORMAT) > $${makefile%.*}.$(FORMAT); \
+		basename=$$(basename $$makefile .mk); \
+		$(MAKEFILE2DOT) 2>$$basename.err \
+		  | dot -T$(FORMAT) 2>$$basename.dot.err \
+		  > $$basename.$(FORMAT); \
 	done
 
-prep: make-$(MAKEVER)/doc/make.texi
+prep: makefiles
 	mkdir -p graphs
+
+.PHONY: makefiles
+makefiles: make-$(MAKEVER)/doc/make.texi
+	mkdir -p makefiles
+	perl texi2makefiles.pl $^ $@
 
 make-$(MAKEVER)/doc/make.texi: make-$(MAKEVER).tar.gz 
 	tar xf $< $@
@@ -24,7 +31,9 @@ make-$(MAKEVER).tar.gz:
 	(curl -sSL $(TARBALL) || wget -nv -O- $(TARBALL)) > $@
 
 clean:
-	-rm make-$(MAKEVER).tar.gz:
 	-rm -r make-$(MAKEVER)/
 	-rm -r makefiles/
+
+distclean: clean
+	-rm make-$(MAKEVER).tar.gz
 	-rm -r graphs/
