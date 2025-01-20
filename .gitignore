@@ -1,6 +1,11 @@
+.DS_Store
+*~
+.*sw?
+
 __pycache__/
 build/
 dist/
+*.egg-info/
 
 *.dot
 *.png
